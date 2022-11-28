@@ -128,8 +128,7 @@ For constructing the TF-motif-footprint-CRE map, we followed the approach propos
 
 nohup TOBIAS ATACorrect --read_shift 0 0 --bam ATAC_seq/e18_mouse_brain_fresh_5k_atac_possorted_bam.bam --genome ATAC_seq/mm10.fa --peaks ATAC_seq/e18_mouse_brain_fresh_5k_atac_peaks.bed --blacklist ATAC_seq/mm10_blacklist.bed --outdir footprint/e18_mouse_brain_fresh_5k --cores 12
 
-source('Code/R_functions/Step4_functions.R')
-
+source('R_functions/tf_cre_map.R')
 
 # Calculate the footprint scores including NC, NL and NR for each motif's binding region
 ### first convert normalized bw files to GRanges and save/output
@@ -250,6 +249,8 @@ for (i in 1:nrow(promoter.peaks)) {
 save(promoter_peak_gene, file = "Cortex/Target_genes/promoter_peak_gene.rds")
 
 #### (b) CRE – gene links with significant Spearman correlation (P-value < 0.05 and Spearman correlation coefficient ρ > |0.05|) 
+source('R_functions/gene_peak_speaCor.R')
+
 DefaultAssay(cortex) <- "peaks"
 
 # first compute the GC content for each peak
@@ -321,6 +322,8 @@ save(peak_gene_links, file = "Cortex/Target_genes/peak_gene_links.rds")
 Now the above two maps can be merged to create the TF-target gene map.
 
 ```r
+source('R_functions/tf_tg_map.R')
+
 load("Cortex/footprint/Early_e18_mouse_brain_fresh_5k_footprints_cl")
 load("Cortex/Target_genes/peak_gene_links.rds")
 
