@@ -21,7 +21,6 @@ Check_normalized_Signal <- function(file,savefile){
   temp_bw = import.bw(file)
   print(summary(width(temp_bw)))
   print(summary(temp_bw$score))
-  setwd('/zp1/data/plyu3/Human_scATACseq_new/scATAC/Hint/All_normalized')
   saveRDS(temp_bw,file=savefile)
 }
 
